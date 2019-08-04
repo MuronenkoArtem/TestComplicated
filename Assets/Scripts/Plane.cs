@@ -9,17 +9,32 @@ public class Plane : MonoBehaviour
     public float speed;
 
     public int NumbMeth;
+
+    public GameObject Rocket;
+
+    float time = 0;
+
     // Use this for initialization
     void Start()
     {
         v = transform.position;
         speed = Random.Range(0.2f, 0.4f);
-        NumbMeth = Random.Range(0, 2);
+        NumbMeth = Random.Range(0, 1);
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        time += Time.deltaTime;
+
+        Rocket = GameObject.FindGameObjectWithTag("Rocket");
+        if (Rocket == true)
+        {
+            float dist = Vector3.Distance(transform.position, Rocket.transform.position);
+
+        }
         if (NumbMeth == 0)
             Forvard(this.gameObject);
         else
@@ -28,7 +43,8 @@ public class Plane : MonoBehaviour
 
     void Forvard(GameObject gameObject)
     {
-        transform.position += transform.up * speed * Time.deltaTime;
+        transform.Translate(Vector3.up * Time.deltaTime * speed);
+        //transform.position += transform.up * speed * Time.deltaTime;
     }
 
     void Rotate(GameObject gameObject)
