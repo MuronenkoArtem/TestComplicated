@@ -7,7 +7,7 @@ public class Base : MonoBehaviour {
     public GameObject roc;
     void Start()
     {
-        Instantiate(roc, transform.position, Quaternion.identity);
+        //Instantiate(roc, transform.position, Quaternion.identity);
     }
 	void OnMouseDown()
     {

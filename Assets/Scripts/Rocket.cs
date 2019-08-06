@@ -18,9 +18,11 @@ public class Rocket : MonoBehaviour
     {
         Plane = GameObject.FindGameObjectWithTag("Plane");
         float dist = Vector3.Distance(transform.position, Plane.transform.position);
+        Vector3 pos = Plane.transform.position;
+        pos.x = Plane.transform.position.x + (dist * Plane.GetComponent<Plane>().speed);
+        Instantiate(Point, pos, Quaternion.identity);
 
-        //Instantiate(Point, Plane.transform.position + (dist * Plane.GetComponent<Plane>().speed, Quaternion.identity);
-        Debug.Log(Plane.transform.position.x * Time.time + " " + Time.time + " " + dist + " " + Plane.GetComponent<Plane>().speed);
+        Debug.Log(Plane.transform.position.x * Time.time + " " + Time.time + " " + dist + " " + Plane.GetComponent<Plane>().speed);        
     }
 
     void Update()
@@ -28,10 +30,11 @@ public class Rocket : MonoBehaviour
         time += Time.deltaTime;
 
         Plane = GameObject.FindGameObjectWithTag("Plane");
-        //Debug.Log(Plane.transform.position.x * time);
 
+        transform.rotation = Quaternion.Euler(0,0, RotationGrad(Plane,this.gameObject));
+       
         transform.position = Vector3.MoveTowards(transform.position, Plane.transform.position, Time.deltaTime * speed);
-        if (Vector3.Distance(transform.position, Plane.transform.position) == 0)
+        if (Vector3.Distance(transform.position, Plane.transform.position) <= 0.5f)
         {
             pos.x = Random.Range(-10, 10);
             pos.y = Random.Range(-10, 10);
@@ -43,7 +46,14 @@ public class Rocket : MonoBehaviour
 
             time = 0;
         }
+    }
 
+    float RotationGrad(GameObject plane,GameObject rocket)
+    {
+        float dX = plane.transform.position.x - rocket.transform.position.x;
+        float dY = plane.transform.position.y - rocket.transform.position.y;
 
+        float rot = Mathf.Atan2(dY, dX) * 180 / Mathf.PI - 55;                  //перевод радиан в градуси и -55 поворот спрайта
+        return rot;
     }
 }
