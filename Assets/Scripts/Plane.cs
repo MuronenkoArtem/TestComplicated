@@ -12,7 +12,7 @@ public class Plane : MonoBehaviour
     public int NumbMeth;
 
     public GameObject Rocket;
-
+    public GameObject PlaneCopy;
     float time = 0;
 
     // Use this for initialization
@@ -27,7 +27,21 @@ public class Plane : MonoBehaviour
     void FixedUpdate()
     {
         time += Time.deltaTime;
-                
+
+        if (transform.position.x < -24 || transform.position.x > 24 || transform.position.y < -12 || transform.position.y > 12)
+        {
+            Vector2 pos;
+            pos.x = Random.Range(-24, 24);
+            pos.y = Random.Range(-12, 12);
+            transform.position = pos;
+
+            NumbMeth = Random.Range(0, 4);
+
+            GameObject Point = GameObject.FindGameObjectWithTag("Point");
+            Rocket = GameObject.FindGameObjectWithTag("Rocket");
+            Destroy(Point);
+            Destroy(Rocket);
+        }
         if (NumbMeth == 0)
             Forvard();
         if (NumbMeth == 1)
@@ -98,7 +112,7 @@ public class Plane : MonoBehaviour
 
         pos.x = transform.position.x + speed * Time.deltaTime;
         pos.y = transform.position.y + Mathf.Sin(pos.x) * Time.deltaTime;
-        
+
         //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(RotationGradWithRotat(pos, this.gameObject), Vector3.forward), 1);
         transform.position = pos;
     }

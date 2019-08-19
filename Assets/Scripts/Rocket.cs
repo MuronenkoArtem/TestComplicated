@@ -19,9 +19,15 @@ public class Rocket : MonoBehaviour
     {
         Plane = GameObject.FindGameObjectWithTag("Plane");
         posR = transform.position;
-        SinusPoint();
+        switch (Plane.GetComponent<Plane>().NumbMeth)
+        {
+            case 0: ForvardPoint(); break;
+            case 1: ForvardUpPoint(); break;
+            case 2: ForvardDowPoint(); break;
+            case 3: SinusPoint(); break;
+            case 4: CenterPoint(); break;
 
-        //Debug.Log(Plane.transform.position.x * Time.time + " " + Time.time + " " + dist + " " + Plane.GetComponent<Plane>().speed);        
+        }
     }
     void Update()
     {
@@ -34,7 +40,7 @@ public class Rocket : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D other)
-    {        
+    {
         if (other.gameObject.tag == "Plane")
         {
             pos.x = Random.Range(-24, 24);
@@ -89,6 +95,7 @@ public class Rocket : MonoBehaviour
 
         Instantiate(Point, v, Quaternion.identity);
     }
+    //Need tested
     void SinusPoint()
     {
         float dist = Vector3.Distance(transform.position, Plane.transform.position);
@@ -124,6 +131,7 @@ public class Rocket : MonoBehaviour
         Instantiate(Point, v, Quaternion.identity);
     }
 
+    //Need tested
     void CenterPoint()
     {
         float dist = Vector3.Distance(transform.position, Plane.transform.position);
